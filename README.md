@@ -2,7 +2,11 @@
 
 An AI-powered web application that analyzes suspicious SMS messages, emails, WhatsApp messages, and job offers to identify potential scam indicators.
 
-![Tech Stack](https://img.shields.io/badge/React-18-blue) ![Tech Stack](https://img.shields.io/badge/Node.js-18+-green) ![Tech Stack](https://img.shields.io/badge/Gemini_AI-Powered-purple) ![Tech Stack](https://img.shields.io/badge/Tailwind_CSS-3-cyan)
+## Live Demo
+
+**[https://scamshield-ai-3q4g.onrender.com](https://scamshield-ai-3q4g.onrender.com)**
+
+> **Note:** Hosted on Render's free tier. The instance automatically spins down after 15 minutes of inactivity, so the initial request after a sleep period may take **~50 seconds** to wake up.
 
 ## Features
 
@@ -12,7 +16,7 @@ An AI-powered web application that analyzes suspicious SMS messages, emails, Wha
 - **Risk Scoring** — Provides risk level (Low/Medium/High) with a 0-100 score
 - **Warning Signs** — Lists specific scam indicators found in the message
 - **Safety Recommendations** — Actionable advice based on threat level
-- **Scan History** — Stores past analyses in browser localStorage
+- **Scan History** — Stores past analyses in browser `localStorage`
 - **Sample Messages** — Built-in examples to demonstrate the tool
 - **Responsive Design** — Works on desktop, tablet, and mobile
 - **Privacy First** — No data stored on the server; history stays in your browser
@@ -20,7 +24,7 @@ An AI-powered web application that analyzes suspicious SMS messages, emails, Wha
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+| ----- | ----- |
 | Frontend | React 18, Vite, Tailwind CSS |
 | Backend | Node.js, Express |
 | AI | Google Gemini 1.5 Flash |
@@ -33,13 +37,13 @@ An AI-powered web application that analyzes suspicious SMS messages, emails, Wha
 ### Prerequisites
 
 - Node.js 18+ installed
-- A Google Gemini API key ([get one free](https://aistudio.google.com/app/apikey))
+- A Google Gemini API key ([get one free](https://aistudio.google.com/apikey))
 
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd ScamSheild-ai
+git clone https://github.com/Lakshminarasimha17/ScamShield-ai.git
+cd ScamShield-ai
 ```
 
 ### 2. Install dependencies
@@ -57,23 +61,25 @@ cp .env.example server/.env
 
 Edit `server/.env` and add your Gemini API key:
 
-```
+```env
 GEMINI_API_KEY=your_actual_api_key_here
 ```
 
-> **Note:** The app works without an API key using the rule-based fallback analyzer, but Gemini AI provides much better analysis.
+*Note:* The app works without an API key using the rule-based fallback analyzer, but Gemini AI provides much better analysis.
 
 ### 4. Run in development mode
 
 Open two terminal windows:
 
 **Terminal 1 — Backend:**
+
 ```bash
 cd server
 npm run dev
 ```
 
 **Terminal 2 — Frontend:**
+
 ```bash
 cd client
 npm run dev
@@ -103,11 +109,21 @@ cd server
 NODE_ENV=production node index.js
 ```
 
-The Express server serves both the API and the built React frontend on port 3001 (or `PORT` env variable).
+The Express server serves both the API and the built React frontend on port `3001` (or the `PORT` environment variable).
 
 ### Deploy to Render
 
-1. Create a new **Web Service** on [Render](https://render.com)
+#### Option 1: One-Click Blueprint (Recommended)
+
+This repository includes a `render.yaml` Blueprint configuration:
+
+1. Fork or push this repository to GitHub
+2. Go to the [Render Dashboard](https://dashboard.render.com/), click **New +** → **Blueprint**, and connect your repository
+3. Add your `GEMINI_API_KEY` under the service's **Environment** settings
+
+#### Option 2: Manual Web Service
+
+1. Create a new **Web Service** on [Render](https://render.com/)
 2. Connect your repository
 3. Set the following:
    - **Build Command:** `cd client && npm install && npm run build && cd ../server && npm install`
@@ -116,8 +132,8 @@ The Express server serves both the API and the built React frontend on port 3001
 
 ## Project Structure
 
-```
-ScamSheild-ai/
+```text
+ScamShield-ai/
 ├── client/                  # React frontend
 │   ├── src/
 │   │   ├── components/      # React components
@@ -142,6 +158,7 @@ ScamSheild-ai/
 ├── .env.example
 ├── .gitignore
 ├── package.json             # Root scripts
+├── render.yaml              # Render Blueprint configuration
 └── README.md
 ```
 
@@ -152,6 +169,7 @@ ScamSheild-ai/
 Analyze a message for scam indicators.
 
 **Request Body:**
+
 ```json
 {
   "message": "Suspicious message text here...",
@@ -161,19 +179,26 @@ Analyze a message for scam indicators.
 ```
 
 | Field | Type | Required | Values |
-|-------|------|----------|--------|
+| ----- | ----- | ----- | ----- |
 | `message` | string | Yes | 5-5000 characters |
 | `type` | string | No | `sms`, `email`, `whatsapp`, `job_offer`, `other` |
 | `language` | string | No | `en`, `hi`, `te` |
 
 **Response:**
+
 ```json
 {
   "risk_level": "high",
   "risk_score": 85,
-  "warning_signs": ["Creates artificial urgency", "Requests sensitive financial information"],
+  "warning_signs": [
+    "Creates artificial urgency",
+    "Requests sensitive financial information"
+  ],
   "explanation": "This message exhibits multiple strong indicators of a scam...",
-  "recommendations": ["Do NOT respond to this message", "Block the sender"],
+  "recommendations": [
+    "Do NOT respond to this message",
+    "Block the sender"
+  ],
   "analysis_method": "gemini_ai",
   "disclaimer": "This AI analysis is advisory only..."
 }
@@ -192,8 +217,3 @@ Health check endpoint. Returns `{ "status": "ok" }`.
 - Input validation with Zod
 - User messages treated as untrusted data, never as instructions
 - No secrets exposed in frontend code or logs
-
-## License
-
-MIT
-
