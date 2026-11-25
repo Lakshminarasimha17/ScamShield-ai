@@ -1,0 +1,19 @@
+{
+  "name": "scamshield-ai",
+  "version": "1.0.0",
+  "description": "AI-powered scam message analyzer",
+  "private": true,
+  "scripts": {
+    "dev:server": "cd server && node --watch index.js",
+    "dev:client": "cd client && npx vite --host",
+    "build": "cd client && npm run build",
+    "start": "cd server && node index.js",
+    "test": "cd server && node --test tests/analyze.test.js",
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "render:build": "cd client && npm install --include=dev && npm run build && cd ../server && npm install --omit=dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

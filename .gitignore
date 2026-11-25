@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# Python virtual environments
+.venv/
+venv/
+
+# Environment variables & secrets
+.env
+server/.env
+client/.env
+.env.*
+!.env.example
+
+# Logs & OS files
+*.log
+.DS_Store
+Thumbs.db
+coverage/
